@@ -3,7 +3,7 @@ package sorts_test
 import (
 	"testing"
 
-	"github.com/mahzze/go-dsa/algorithms/sorts"
+	"github.com/mahzze/dsa-to-go/algorithms/sorts"
 )
 
 func TestBubbleSort(t *testing.T) {

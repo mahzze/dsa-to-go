@@ -3,7 +3,7 @@ package searches_test
 import (
 	"testing"
 
-	"github.com/mahzze/go-dsa/searches"
+	"github.com/mahzze/dsa-to-go/algorithms/searches"
 )
 
 func TestBinarySearch(t *testing.T) {
