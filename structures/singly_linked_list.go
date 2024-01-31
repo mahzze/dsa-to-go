@@ -68,5 +68,15 @@ func (sll SinglyLinkedList) InsertAt(i, v int) {
 func (sll SinglyLinkedList) Remove() {
 }
 
-func (sll SinglyLinkedList) RemoveAt(i, v int) {
+func (sll *SinglyLinkedList) Print() {
+	if sll.Length == 0 {
+		fmt.Print("List is empty!")
+		return
+	}
+
+	cur := sll.Head
+	for i := 0; i != sll.Length; i++ {
+		fmt.Printf("item index: %d, value: %v \n", i, cur.Value)
+		cur = cur.next
+	}
 }
