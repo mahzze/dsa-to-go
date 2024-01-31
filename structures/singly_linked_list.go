@@ -1,9 +1,10 @@
 package structures
 
+import "fmt"
+
 type Node struct {
 	Value int
 	next  *Node
-	prev  *Node
 }
 
 type SinglyLinkedList struct {
@@ -12,30 +13,35 @@ type SinglyLinkedList struct {
 	Length int
 }
 
-func (sll SinglyLinkedList) Get(i int) int {
+func (sll SinglyLinkedList) Get(i int) (int, error) {
+	if i > sll.Length {
+		err := fmt.Errorf("Index (%v) is bigger than the list length (%v)!", i, sll.Length)
+		return 0, err
+	}
 	if i == 0 {
-		return sll.Head.Value
+		return sll.Head.Value, nil
 	}
 	if i == sll.Length+1 {
-		return sll.Tail.Value
+		return sll.Tail.Value, nil
 	}
 
 	cur := &sll.Head
-	for k := 0; k < i; k++ {
+	for cur.next != nil {
 		cur = cur.next
 	}
-	return cur.Value
+	return cur.Value, nil
 }
 
 func (sll SinglyLinkedList) Append(v int) {
-	tmp := Node{Value: v, prev: &sll.Tail}
+	tmp := Node{Value: v, next: nil}
 	sll.Tail.next = &tmp
+	sll.Tail = tmp
 	sll.Length++
 }
 
 func (sll SinglyLinkedList) Prepend(v int) {
-	tmp := Node{Value: v, next: &sll.Head}
-	sll.Head.next = &tmp
+	tmp := sll.Head
+	sll.Head = Node{Value: v, next: &tmp}
 	sll.Length++
 }
 
