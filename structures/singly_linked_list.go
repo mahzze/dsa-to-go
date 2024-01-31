@@ -8,9 +8,17 @@ type Node struct {
 }
 
 type SinglyLinkedList struct {
-	Head   Node
-	Tail   Node
+	Head   *Node
+	Tail   *Node
 	Length int
+}
+
+func newSinglyLinkedList() SinglyLinkedList {
+	return SinglyLinkedList{
+		Length: 0,
+		Head:   nil,
+		Tail:   nil,
+	}
 }
 
 func (sll SinglyLinkedList) Get(i int) (int, error) {
@@ -25,23 +33,32 @@ func (sll SinglyLinkedList) Get(i int) (int, error) {
 		return sll.Tail.Value, nil
 	}
 
-	cur := &sll.Head
+	cur := sll.Head
 	for cur.next != nil {
 		cur = cur.next
 	}
 	return cur.Value, nil
 }
 
-func (sll SinglyLinkedList) Append(v int) {
-	tmp := Node{Value: v, next: nil}
-	sll.Tail.next = &tmp
-	sll.Tail = tmp
+func (sll *SinglyLinkedList) Append(v int) {
+	tmp := &Node{Value: v, next: nil}
+	if sll.Length == 0 {
+		sll.Head = tmp
+		sll.Tail = tmp
+	} else {
+		sll.Tail.next = tmp
+		sll.Tail = sll.Tail.next
+	}
+
 	sll.Length++
 }
 
-func (sll SinglyLinkedList) Prepend(v int) {
+func (sll *SinglyLinkedList) Prepend(v int) {
 	tmp := sll.Head
-	sll.Head = Node{Value: v, next: &tmp}
+	sll.Head = &Node{Value: v, next: tmp}
+	if sll.Length == 0 {
+		sll.Tail = sll.Head
+	}
 	sll.Length++
 }
 
